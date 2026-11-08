@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f2a3d">
+<title>Quiz S1</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Source+Sans+3:wght@400;600&display=swap">
+<style>
+:root{--bg:#e9eff2;--surface:#fff;--ink:#0f2a3d;--mute:#5b7080;--line:#c9d5dc;--accent:#1d4ed8;--accent-ink:#fff;--ok:#17703f;--ok-bg:#dcf2e5;--ko:#b3261e;--ko-bg:#fbe3e0;color-scheme:light;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b1a25;--surface:#122636;--ink:#e6eef3;--mute:#92a8b7;--line:#274255;--accent:#6e95ff;--accent-ink:#0b1a25;--ok:#6fd49b;--ok-bg:#12382a;--ko:#ff8f86;--ko-bg:#40191a;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0b1a25;--surface:#122636;--ink:#e6eef3;--mute:#92a8b7;--line:#274255;--accent:#6e95ff;--accent-ink:#0b1a25;--ok:#6fd49b;--ok-bg:#12382a;--ko:#ff8f86;--ko-bg:#40191a;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.5 "Source Sans 3",system-ui,sans-serif;min-height:100vh}
+main{max-width:620px;margin:0 auto;padding:20px 18px 40px}
+h1,h2{font-family:"Bricolage Grotesque",system-ui,sans-serif;line-height:1.1;margin:0}
+h1{font-size:clamp(2.3rem,11vw,3.4rem);font-weight:800;letter-spacing:-.02em}
+h2{font-size:1.45rem;font-weight:600;line-height:1.25}
+p{margin:0}
+.mute{color:var(--mute)}
+.hero{padding:28px 0 8px}
+.hero p{margin-top:12px;max-width:34ch}
+.group{margin-top:26px}
+.group>b{display:block;margin-bottom:8px;font-weight:600}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip,.btn,.opt{font:inherit;color:inherit;cursor:pointer}
+.chip{border:1.5px solid var(--line);background:var(--surface);padding:9px 14px;border-radius:99px}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn{border:0;border-radius:14px;padding:15px 20px;font-weight:600;background:var(--accent);color:var(--accent-ink);width:100%;margin-top:22px;font-size:1.05rem}
+.btn.alt{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.btn[disabled]{opacity:.45;cursor:default}
+.row{display:flex;gap:10px}
+.row .btn{margin-top:22px}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.bar{height:6px;background:var(--line);border-radius:9px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);transition:width .25s}
+.meta{display:flex;justify-content:space-between;margin:10px 0 22px;font-size:.95rem;color:var(--mute)}
+.hint{margin:8px 0 16px;color:var(--mute);font-size:.95rem}
+.opts{display:grid;gap:10px;margin-top:18px}
+.opt{display:flex;gap:12px;text-align:left;align-items:flex-start;background:var(--surface);border:1.5px solid var(--line);border-radius:14px;padding:13px 14px;width:100%}
+.opt .mk{flex:none;width:22px;height:22px;border:2px solid var(--mute);border-radius:6px;display:grid;place-items:center;font-size:.9rem;font-weight:800;margin-top:1px}
+.opt.single .mk{border-radius:50%}
+.opt.on{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.opt.on .mk{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.opt.ok{background:var(--ok-bg);border-color:var(--ok)}
+.opt.ok .mk{background:var(--ok);border-color:var(--ok);color:var(--bg)}
+.opt.ko{background:var(--ko-bg);border-color:var(--ko)}
+.opt.ko .mk{background:var(--ko);border-color:var(--ko);color:var(--bg)}
+.opt.miss{border-style:dashed;border-color:var(--ok)}
+figure{margin:16px 0 0}
+figure img{max-width:100%;border-radius:12px;display:block}
+.titre{color:var(--mute);font-size:.95rem;margin-bottom:6px}
+.ans{margin-top:18px;background:var(--surface);border-left:5px solid var(--accent);border-radius:12px;padding:14px 16px;white-space:pre-line}
+.ans b{display:block;margin-bottom:4px}
+.verdict{margin-top:16px;font-weight:600}
+.verdict.ok{color:var(--ok)}.verdict.ko{color:var(--ko)}
+.score{font:800 5rem/1 "Bricolage Grotesque",system-ui,sans-serif;margin:22px 0 4px;letter-spacing:-.03em}
+.rev{margin-top:26px;display:grid;gap:12px}
+.rev div{background:var(--surface);border-radius:12px;padding:12px 14px;border:1px solid var(--line)}
+.rev small{display:block;color:var(--mute);margin-top:4px;white-space:pre-line}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+</style>
+</head>
+<body>
+<main id="app"></main>
+<script>
+const DATA = [{"type": "qcm", "question": "Quels sont les canaux pour focaliser l'attention ?", "options": ["La voix", "Le toucher", "L'odorat", "Le regard", "l'écoute"], "correct": ["La voix", "Le toucher", "Le regard"]}, {"type": "qcm", "question": "Quelles sont les étapes de l'écoute active", "options": ["Recontextualiser", "Reformuler", "Renforcer", "Raisonner", "Résumer", "Parler de soi"], "correct": ["Recontextualiser", "Reformuler", "Renforcer", "Résumer"]}, {"type": "qcm", "question": "Quelles sont les types de respiration contrôlée ?", "options": ["Respiration complère", "Respiration abdominale", "Respiration thoraco-abdominale"], "correct": ["Respiration complère", "Respiration abdominale"]}];
+const $app = document.getElementById('app');
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const norm = s => String(s).trim();
+
+const items = DATA.map(d => d.type === 'qcm'
+  ? { kind: 'qcm', q: d.question, options: d.options, correct: d.correct.map(norm) }
+  : d.type === 'libre'
+  ? { kind: 'open', q: d.question, correct: d.correct }
+  : { kind: 'num', titre: (d['titre '] || d.titre || '').trim(), img: d.image, variants: d.variantes });
+
+const cfg = { mode: 'all', mix: true };
+let deck = [], i = 0, score = 0, missed = [], done = false, sel = new Set(), cur = null;
+
+function best() { try { return JSON.parse(localStorage.getItem('quiz-s1-best')); } catch (e) { return null; } }
+function saveBest(s, n) { try { const b = best(); if (!b || s / n >= b.s / b.n) localStorage.setItem('quiz-s1-best', JSON.stringify({ s, n })); } catch (e) {} }
+
+function home() {
+  const nQ = items.filter(x => x.kind === 'qcm').length, nO = items.length - nQ, b = best();
+  $app.innerHTML = `
+  <div class="hero"><h1>Quiz S1</h1>
+  <p class="mute">${items.length} questions : QCM, questions ouvertes et exercices de calcul.</p></div>
+  <div class="group"><b>Quelles questions ?</b><div class="chips">
+    ${[['all', `Toutes (${items.length})`], ['qcm', `QCM (${nQ})`], ['open', `Ouvertes et calculs (${nO})`]].map(([k, l]) => `<button class="chip" data-mode="${k}" aria-pressed="${cfg.mode === k}">${l}</button>`).join('')}
+  </div></div>
+  <div class="group"><b>Ordre</b><div class="chips">
+    <button class="chip" data-mix="1" aria-pressed="${cfg.mix}">Mélangé</button>
+    <button class="chip" data-mix="0" aria-pressed="${!cfg.mix}">Dans l’ordre du fichier</button>
+  </div></div>
+  <button class="btn" id="go">Commencer</button>
+  ${b ? `<p class="mute" style="margin-top:16px;text-align:center">Meilleur score : ${b.s} / ${b.n}</p>` : ''}`;
+  $app.querySelectorAll('[data-mode]').forEach(e => e.onclick = () => { cfg.mode = e.dataset.mode; home(); });
+  $app.querySelectorAll('[data-mix]').forEach(e => e.onclick = () => { cfg.mix = e.dataset.mix === '1'; home(); });
+  document.getElementById('go').onclick = () => start(items.filter(x => cfg.mode === 'all' || (cfg.mode === 'qcm') === (x.kind === 'qcm')));
+}
+
+function start(list) {
+  deck = cfg.mix ? shuffle(list) : list.slice();
+  i = 0; score = 0; missed = []; next(0);
+}
+
+function next(step) { i += step; i >= deck.length ? result() : show(); }
+
+function head() {
+  return `<div class="bar" role="progressbar" aria-valuenow="${i + 1}" aria-valuemax="${deck.length}"><i style="width:${(i / deck.length) * 100}%"></i></div>
+  <div class="meta"><span>Question ${i + 1} sur ${deck.length}</span><span>Score ${score}</span></div>`;
+}
+
+function show() {
+  window.scrollTo(0, 0); done = false; sel = new Set();
+  const it = deck[i];
+  if (it.kind === 'qcm') {
+    cur = { it, opts: cfg.mix ? shuffle(it.options) : it.options.slice() };
+    const multi = it.correct.length > 1;
+    $app.innerHTML = head() + `<h2>${esc(it.q)}</h2>
+    <p class="hint">${multi ? 'Plusieurs réponses possibles.' : 'Une seule réponse.'}</p>
+    <div class="opts">${cur.opts.map((o, k) => `<button class="opt ${multi ? '' : 'single'}" data-k="${k}" aria-pressed="false"><span class="mk"></span><span>${esc(o)}</span></button>`).join('')}</div>
+    <button class="btn" id="ok" disabled>Valider</button>`;
+    const ok = document.getElementById('ok');
+    $app.querySelectorAll('.opt').forEach(b => b.onclick = () => {
+      if (done) return;
+      const k = +b.dataset.k;
+      if (!multi) { sel.clear(); $app.querySelectorAll('.opt').forEach(x => x.classList.remove('on')); }
+      sel.has(k) ? sel.delete(k) : sel.add(k);
+      b.classList.toggle('on', sel.has(k));
+      $app.querySelectorAll('.opt').forEach(x => x.setAttribute('aria-pressed', sel.has(+x.dataset.k)));
+      ok.disabled = sel.size === 0;
+    });
+    ok.onclick = () => done ? next(1) : gradeQcm(ok);
+  } else {
+    const v = it.kind === 'num' ? it.variants[Math.floor(Math.random() * it.variants.length)] : it;
+    cur = { it, v };
+    $app.innerHTML = head() +
+      (it.kind === 'num' ? `<p class="titre">${esc(it.titre)}</p>` : '') +
+      `<h2>${esc(v.question || v.q)}</h2>` +
+      (it.kind === 'num' && it.img ? `<figure><img src="${esc(it.img)}" alt="${esc(it.titre)}" onerror="this.parentNode.remove()"></figure>` : '') +
+      `<p class="hint" style="margin-top:18px">${it.kind === 'num' ? 'Pose le calcul sur papier, puis compare.' : 'Réponds dans ta tête ou à voix haute, puis compare.'}</p>
+      <div id="slot"><button class="btn" id="rev">Voir la réponse</button></div>`;
+    document.getElementById('rev').onclick = () => revealOpen();
+  }
+}
+
+function gradeQcm(btn) {
+  done = true;
+  const { it, opts } = cur;
+  const picked = new Set([...sel].map(k => norm(opts[k])));
+  const right = it.correct.length === picked.size && it.correct.every(c => picked.has(c));
+  $app.querySelectorAll('.opt').forEach(b => {
+    const o = norm(opts[+b.dataset.k]), isC = it.correct.includes(o), isP = picked.has(o);
+    b.classList.remove('on');
+    const mk = b.querySelector('.mk');
+    if (isC && isP) { b.classList.add('ok'); mk.textContent = '✓'; }
+    else if (isP) { b.classList.add('ko'); mk.textContent = '✗'; }
+    else if (isC) { b.classList.add('ok', 'miss'); mk.textContent = '✓'; }
+  });
+  if (right) score++; else missed.push({ q: it.q, a: it.correct.join('\n') });
+  btn.insertAdjacentHTML('beforebegin', `<p class="verdict ${right ? 'ok' : 'ko'}">${right ? 'Bonne réponse.' : 'Pas tout à fait : les bonnes réponses sont cochées en vert.'}</p>`);
+  btn.textContent = i + 1 < deck.length ? 'Question suivante' : 'Voir le résultat';
+}
+
+function revealOpen() {
+  const { it, v } = cur;
+  const ans = (v.correct || []).join('\n');
+  document.getElementById('slot').innerHTML = `<div class="ans"><b>Réponse attendue</b>${esc(ans)}</div>
+  <div class="row"><button class="btn alt" id="no">À revoir</button><button class="btn" id="yes">Je l’avais</button></div>`;
+  const fin = good => { if (good) score++; else missed.push({ q: v.question || v.q, a: ans }); next(1); };
+  document.getElementById('yes').onclick = () => fin(true);
+  document.getElementById('no').onclick = () => fin(false);
+}
+
+function result() {
+  window.scrollTo(0, 0);
+  const n = deck.length; saveBest(score, n);
+  const pct = Math.round(score / n * 100);
+  $app.innerHTML = `<div class="hero"><h2>Terminé</h2><div class="score">${score}<span class="mute" style="font-size:2rem"> / ${n}</span></div>
+  <p class="mute">${pct} % de réussite</p></div>
+  ${missed.length ? `<div class="rev">${missed.map(m => `<div>${esc(m.q)}<small>${esc(m.a)}</small></div>`).join('')}</div>` : '<p class="verdict ok" style="margin-top:20px">Aucune erreur.</p>'}
+  ${missed.length ? '<button class="btn" id="retry">Refaire mes erreurs</button>' : ''}
+  <button class="btn alt" id="home">Retour à l’accueil</button>`;
+  document.getElementById('home').onclick = home;
+  const r = document.getElementById('retry');
+  if (r) r.onclick = () => {
+    const bad = new Set(missed.map(m => m.q));
+    start(items.filter(x => x.kind === 'num' ? x.variants.some(v => bad.has(v.question)) : bad.has(x.q)));
+  };
+}
+home();
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
+</script>
+</body>
+</html>
+

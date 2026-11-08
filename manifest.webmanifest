@@ -1,0 +1,18 @@
+{
+  "name": "Quiz S1",
+  "short_name": "Quiz S1",
+  "lang": "fr",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#e9eff2",
+  "theme_color": "#0f2a3d",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
